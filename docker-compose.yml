@@ -1,0 +1,61 @@
+services:
+  app:
+    build:
+      args:
+        user: pengguna
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: perpustakaan:0.1
+    container_name: perpustakan
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - internal
+      - mariadb-school_internal
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-school
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - caddy
+      - internal
+    labels:
+      - "caddy_1=perpus.zef.my.id"
+      - "caddy_1.reverse_proxy={{upstreams 80}}"
+      #- "caddy_1.basic_auth.sekula=$2a$14$XhuVkJxf/moueMM6kFwDuuqXVVdM4bVvrmWTmbmyeiiobTjJThlLm"
+      ## Declares security headers to improve security
+      - "caddy_1.header="
+      - "caddy_1.header.Permissions-Policy=interest-cohort=()"
+      - "caddy_1.header.Strict-Transport-Security=max-age=31536000;"
+      - "caddy_1.header.X-Content-Type-Options=nosniff"
+      - "caddy_1.header.X-Frame-Options=self"
+      - "caddy_1.header.X-Robots-Tag=none"
+      ## allow search engine indexing
+      - "caddy_1.header.Referrer-Policy=no-referrer-when-downgrade"
+      #- "caddy_1.header.Content-Security-Policy=`default-src 'self'`"
+      ## Removes server and x-powered-by headers
+      - "caddy_1.header.-Server="
+      - "caddy_1.header.-X-Powered-By="
+      ## Enable zstd and gzip compression
+      - "caddy_1.encode=zstd gzip"
+      ## Enable access log
+      - "caddy_1.log.output=file /data/log/perpus.zef.my.id.log"
+      - "caddy_1.log.output.roll_size=50MiB"
+      - "caddy_1.log.output.roll_keep=5"
+
+networks:
+  caddy:
+    external: true
+  internal:
+    internal: true
+  mariadb-school_internal:
+    external: true
