@@ -16,7 +16,6 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 {{-- <span class="dropdown-item dropdown-header">4 Notifications</span> --}}
-                <div class="dropdown-divider"></div>
                 <a href="/admin/anggota" class="dropdown-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-people-fill mr-2" viewBox="0 0 16 16">
@@ -25,6 +24,7 @@
                     </svg> new request member
                     <span class="float-right text-muted text-sm">5 mins</span>
                 </a>
+                <div class="dropdown-divider"></div>
                 <a href="/admin/anggota" class="dropdown-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-people-fill mr-2" viewBox="0 0 16 16">
@@ -33,6 +33,7 @@
                     </svg> new request member
                     <span class="float-right text-muted text-sm">8 mins</span>
                 </a>
+                <div class="dropdown-divider"></div>
                 <a href="/admin/anggota" class="dropdown-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-people-fill mr-2" viewBox="0 0 16 16">
@@ -41,8 +42,6 @@
                     </svg> new request member
                     <span class="float-right text-muted text-sm">10 mins</span>
                 </a>
-                {{-- <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a> --}}
             </div>
         </li>
         <li class="nav-item dropdown">
@@ -50,6 +49,8 @@
                 <img src="{{ asset('templates/dist/img/avatar.png') }}" class="img-circle" alt="User Image">
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <a href="#" class="dropdown-item dropdown-footer text-bold">JOHN DOE</a>
+                <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-gear mr-2" viewBox="0 0 16 16">
