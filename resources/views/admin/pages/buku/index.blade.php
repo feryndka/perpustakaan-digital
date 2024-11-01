@@ -3,22 +3,25 @@
 @section('header')
     <h1 class="text-center">DATA BUKU</h1>
     <hr>
-    <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-                <button class="btn btn-sidebar bg-dark">
-                    <i class="fas fa-search fa-fw"></i>
-                </button>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('content')
     <div class="row text-center">
         <div class="col">
             <div class="card">
+                <div class="card-header form-inline d-flex justify-content-end">
+                    {{-- <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar bg-dark">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div> --}}
+                    <a href="/admin/buku/create" class="btn btn-md bg-primary">
+                        Tambah Data
+                    </a>
+                </div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
@@ -42,7 +45,7 @@
                                     <td>{{ $buku->judul }}</td>
                                     <td>{{ $buku->penulis }}</td>
                                     <td>{{ $buku->lokasi }}</td>
-                                    <td>{{ $buku->jumlahBuku }}</td>
+                                    <td>{{ $buku->jumlah }}</td>
                                     <td>{{ Str::limit($buku->deskripsi, 30) }}</td>
                                     <td>
                                         <p class="badge p-2 {{ $buku->tersedia ? 'bg-green' : 'bg-yellow' }}">
@@ -50,8 +53,15 @@
                                         </p>
                                     </td>
                                     <td>
-                                        <button class="btn bg-primary">Edit</button>
-                                        <button class="btn bg-danger">Hapus</button>
+                                        <div class="d-flex justify-content-center">
+                                            <a href="/admin/buku/edit/{{ $buku->id }}"
+                                                class="btn btn-sm bg-primary mr-2">Edit</a>
+                                            <form action="/admin/buku/{{ $buku->id }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm bg-danger">Hapus</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -60,10 +70,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="">
-        <button class="btn bg-primary">
-            tambah data
-        </button>
     </div>
 @endsection
