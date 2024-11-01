@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('anggota', function (Blueprint $table) {
-            $table->id('idAnggota');
-	    $table->string('nama'); // nama Anggota
-	    $table->string('alamat'); // alamat
-	    $table->integer('noHP'); // noHP
-	    $table->string('username')->unique(); //username
-	    $table->string('password'); // password login
-	    $table->string('role'); // role admin, peminjam, dll
-	    $table->string('otorisasi'); // khusus admin untuk otorisasi fungsi tertentu
+            $table->id();
+            $table->string('nama'); // nama Anggota
+            $table->string('alamat'); // alamat
+            $table->integer('noHP'); // noHP
+            $table->string('username')->unique(); //username
+            $table->string('password'); // password login
+            $table->string('role'); // role admin, peminjam, dll
+            $table->string('otorisasi'); // khusus admin untuk otorisasi fungsi tertentu
             $table->timestamps();
         });
     }

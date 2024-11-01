@@ -12,21 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_peminjaman', function (Blueprint $table) {
-            $table->id('idPermohonan');
-	    $table->unsignedBigInteger('idAnggota');
+            $table->id();
+            $table->unsignedBigInteger('idAnggota');
 
-	    // Defining the foreign key constraint
-            $table->foreign('idAnggota')->references('idAnggota')->on('anggota')
-                  ->onDelete('cascade'); // Optionally specify delete behavior
+            // Defining the foreign key constraint
+            $table->foreign('idAnggota')->references('id')->on('anggota')
+                ->onDelete('cascade'); // Optionally specify delete behavior
 
-	    $table->unsignedBigInteger('idBuku');
+            $table->unsignedBigInteger('idBuku');
 
-	    // Defining the foreign key constraint
-            $table->foreign('idBuku')->references('idBuku')->on('buku')
-                  ->onDelete('cascade'); // Optionally specify delete behavior
+            // Defining the foreign key constraint
+            $table->foreign('idBuku')->references('id')->on('buku')
+                ->onDelete('cascade'); // Optionally specify delete behavior
 
-	    $table->timestamps();
-	    $table->integer('bulan');
+            $table->timestamps();
+            $table->integer('bulan');
         });
     }
 

@@ -15,7 +15,7 @@
         </svg>
         <p>
             Data Anggota
-            <span class="right badge badge-danger">New</span>
+            {{-- <span class="right badge badge-danger">New</span> --}}
         </p>
     </a>
 </li>
