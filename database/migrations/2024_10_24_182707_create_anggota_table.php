@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('noHP'); // noHP
             $table->string('username')->unique(); //username
             $table->string('password'); // password login
-            $table->string('role'); // role admin, peminjam, dll
-            $table->string('otorisasi'); // khusus admin untuk otorisasi fungsi tertentu
+            $table->enum('role', ['admin', 'user'])->default('user'); // role admin, peminjam, dll
+            // $table->string('otorisasi'); // khusus admin untuk otorisasi fungsi tertentu
             $table->timestamps();
         });
     }
