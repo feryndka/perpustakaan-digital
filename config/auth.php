@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Anggota;
+
 return [
 
     /*
@@ -40,6 +42,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
+        ],
+
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'user',
+        ],
     ],
 
     /*
@@ -60,9 +72,14 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'admin' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => Anggota::class,
+        ],
+
+        'user' => [
+            'driver' => 'eloquent',
+            'model' => Anggota::class,
         ],
 
         // 'users' => [
