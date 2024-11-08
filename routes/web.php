@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/', [AuthController::class, 'verify'])->name('auth.verify');
 
+Route::get('/registrasi', [AuthController::class, 'registrasi'])->middleware('guest');
+Route::post('/registrasi/store', [AuthController::class, 'store'])->name('registrasi.store');
+
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 

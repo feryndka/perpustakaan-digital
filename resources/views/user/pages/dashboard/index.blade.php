@@ -1,9 +1,9 @@
 @extends('user.components.layout')
 
 @section('header')
-    <h1>Dashboard User / Peminjam</h1>
+    <h1>Dashboard Peminjam</h1>
 @endsection
 
 @section('content')
-    <p>this is dashboard</p>
+    <p>Halo, {{ Auth::user()->nama }}</p>
 @endsection

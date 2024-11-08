@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Anggota::create([
-            'nama' => 'pustakawan',
-            'alamat' => 'JL.kertanegara',
+            'nama' => 'Fery',
+            'alamat' => 'JL.Buah batu',
             'noHP' => 012345,
             'username' => 'adminlib',
             'password' => bcrypt('admin123'),
@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Anggota::create([
-            'nama' => 'peminjam',
-            'alamat' => 'JL.kembang',
+            'nama' => 'Ahmad',
+            'alamat' => 'JL.Bojongsoang',
             'noHP' => 123412,
             'username' => 'userlib',
             'password' => bcrypt('user123'),

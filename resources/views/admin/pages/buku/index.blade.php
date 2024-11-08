@@ -9,19 +9,20 @@
     <div class="row text-center">
         <div class="col">
             <div class="card">
-                <div class="card-header form-inline d-flex justify-content-end">
-                    {{-- <div class="input-group" data-widget="sidebar-search">
+                <div class="form-inline d-flex justify-content-between px-4 pt-3">
+                    <div class="input-group" data-widget="sidebar-search">
                         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-sidebar bg-dark">
                                 <i class="fas fa-search fa-fw"></i>
                             </button>
                         </div>
-                    </div> --}}
+                    </div>
                     <a href="/admin/buku/create" class="btn btn-md bg-primary">
                         Tambah Data
                     </a>
                 </div>
+                <hr>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>

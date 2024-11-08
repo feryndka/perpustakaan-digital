@@ -9,13 +9,13 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <form action="/admin/buku/store" method="POST">
+                <form action="/admin/buku/store" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="card-body">
                         <div class="form-group">
                             <label for="image" class="form-label">Image</label>
-                            <input type="text" name="image" id="image"
+                            <input type="file" name="image" id="image"
                                 class="form-control @error('image') is-invalid @enderror" value="{{ old('image') }}">
                             @error('image')
                                 <span class="invalid-feedback">*{{ $message }}</span>

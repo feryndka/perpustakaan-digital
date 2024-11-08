@@ -49,7 +49,7 @@
                 <img src="{{ asset('templates/dist/img/avatar.png') }}" class="img-circle" alt="User Image">
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item dropdown-footer text-bold">JOHN DOE</a>
+                <a href="#" class="dropdown-item dropdown-footer text-bold">{{ Auth::user()->nama }}</a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnggotaAuthVerifyRequest;
+use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,6 +12,32 @@ class AuthController extends Controller
     public function index()
     {
         return view('auth.login');
+    }
+
+    public function registrasi()
+    {
+        return view('auth.registrasi');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required|min:5',
+            'noHP' => 'required',
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        Anggota::create([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'noHP' => $request->noHP,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect(route('login'));
     }
 
     public function verify(AnggotaAuthVerifyRequest $request)

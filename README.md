@@ -51,5 +51,5 @@ Pastikan sudah menginstal perangkat lunak berikut di lokal sistem :
 ## How to run project
 
 -   php artisan serve
--   php artisan migrate:fresh --seed
+-   php artisan migrate:fresh
 -   run database mysql

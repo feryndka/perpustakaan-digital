@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Buku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BukuController extends Controller
 {
@@ -22,8 +23,8 @@ class BukuController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'image' => 'required',
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required|min:5',
             'penulis' => 'required',
             'lokasi' => 'required|min:3',
@@ -31,7 +32,19 @@ class BukuController extends Controller
             'deskripsi' => 'required',
         ]);
 
-        Buku::create($validated);
+        $image = $request->file('image');
+        $nameFileImage = $image->getClientOriginalName();
+        $path = 'image/' . $nameFileImage;
+        Storage::disk('public')->put($path, file_get_contents($image));
+
+        Buku::create([
+            'image' => $nameFileImage,
+            'judul' => $request->judul,
+            'penulis' => $request->penulis,
+            'lokasi' => $request->lokasi,
+            'jumlah' => $request->jumlah,
+            'deskripsi' => $request->deskripsi,
+        ]);
 
         return redirect('/admin/buku');
     }
@@ -48,7 +61,7 @@ class BukuController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'image' => 'required',
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required|min:5',
             'penulis' => 'required',
             'lokasi' => 'required|min:3',

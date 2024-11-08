@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    <p>this is dashboard</p>
+    <p>Halo, {{ Auth::user()->nama }}</p>
 @endsection
