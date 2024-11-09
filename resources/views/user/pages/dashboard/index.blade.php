@@ -9,15 +9,17 @@
 
 @section('content')
     <div class="container">
-        <!-- Search Bar -->
-        <div class="input-group flex justify-center mb-6" data-widget="sidebar-search">
-            <input class="form-control max-w-md" type="search" placeholder="Search..." aria-label="Search">
+        {{-- Search bar --}}
+        <form action="{{ route('user.dashboard.index') }}" method="get" class="input-group flex justify-center mb-6">
+            @csrf
+            <input class="form-control max-w-md hover:shadow-md" name="search" type="search" placeholder="Search..."
+                aria-label="Search">
             <div class="input-group-append">
-                <button class="btn btn-sidebar bg-dark">
+                <button type="submit" class="btn btn-sidebar bg-dark">
                     <i class="fas fa-search fa-fw"></i>
                 </button>
             </div>
-        </div>
+        </form>
 
         <div class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5 pb-4">
             @foreach ($buku as $buku)
@@ -34,6 +36,14 @@
                     </div>
                 </a>
             @endforeach
+        </div>
+        <div class="pagination flex justify-center">
+            @php
+                use App\Models\Buku;
+                $buku = Buku::query();
+                $buku = $buku->paginate(10);
+            @endphp
+            {{ $buku->links('pagination::bootstrap-4') }}
         </div>
     </div>
 @endsection

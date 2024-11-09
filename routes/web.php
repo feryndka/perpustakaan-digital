@@ -15,7 +15,7 @@ Route::post('/registrasi/store', [AuthController::class, 'store'])->name('regist
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 
-    Route::get('/admin/buku', [BukuController::class, 'index']);
+    Route::get('/admin/buku', [BukuController::class, 'index'])->name('admin.buku.index');
     Route::get('/admin/buku/create', [BukuController::class, 'create']);
     Route::post('/admin/buku/store', [BukuController::class, 'store']);
     Route::get('/admin/buku/edit/{idBuku}', [BukuController::class, 'edit']);

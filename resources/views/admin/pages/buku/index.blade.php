@@ -12,14 +12,18 @@
         <div class="col">
             <div class="card">
                 <div class="form-inline flex justify-between p-3">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    {{-- Search bar --}}
+                    <form action="{{ route('admin.buku.index') }}" method="get" class="input-group flex">
+                        @csrf
+                        <input class="form-control hover:shadow-md" name="search" type="search" placeholder="Search..."
+                            aria-label="Search">
                         <div class="input-group-append">
-                            <button class="btn btn-sidebar bg-dark">
+                            <button type="submit" class="btn btn-sidebar bg-dark">
                                 <i class="fas fa-search fa-fw"></i>
                             </button>
                         </div>
-                    </div>
+                    </form>
+                    {{-- Button tambah data buku --}}
                     <a href="/admin/buku/create" class="btn btn-md bg-primary">
                         Tambah Data
                     </a>
@@ -43,7 +47,7 @@
                         <tbody>
                             @foreach ($buku as $buku)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $buku->id }}</td>
                                     <td>{{ Str::limit($buku->image, 15) }}</td>
                                     <td>{{ Str::limit($buku->judul, 20) }}</td>
                                     <td>{{ Str::limit($buku->penulis, 10) }}</td>
@@ -71,6 +75,14 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="pagination flex justify-center mt-4">
+                        @php
+                            use App\Models\Buku;
+                            $buku = Buku::query();
+                            $buku = $buku->paginate(5);
+                        @endphp
+                        {{ $buku->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
         </div>
