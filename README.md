@@ -31,9 +31,21 @@ Pastikan sudah menginstal perangkat lunak berikut di lokal sistem :
     cp .env.example .env
     ```
 
-4. **Generate application key**:
+4. **Generate application key** :
+
     ```cmd
     php artisan key:generate
+    ```
+
+5. **Install node module** :
+
+    ```cmd
+    npm install
+    ```
+
+6. **Install storage link** :
+    ```cmd
+    php artisan storage:link
     ```
 
 ## Konfigurasi Database
@@ -53,3 +65,4 @@ Pastikan sudah menginstal perangkat lunak berikut di lokal sistem :
 -   php artisan serve
 -   php artisan migrate:fresh
 -   run database mysql
+-   npm run dev

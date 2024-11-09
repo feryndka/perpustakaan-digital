@@ -1,15 +1,17 @@
 @extends('admin.components.layout')
 
 @section('header')
-    <h1 class="text-center">DATA BUKU</h1>
-    <hr>
+    <h1 class="text-center text-bold">DATA BUKU</h1>
+    <div class="flex justify-center pt-2">
+        <div class="h-1 bg-black rounded w-20"></div>
+    </div>
 @endsection
 
 @section('content')
     <div class="row text-center">
         <div class="col">
             <div class="card">
-                <div class="form-inline d-flex justify-content-between px-4 pt-3">
+                <div class="form-inline flex justify-between p-3">
                     <div class="input-group" data-widget="sidebar-search">
                         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
@@ -42,14 +44,15 @@
                             @foreach ($buku as $buku)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $buku->image }}</td>
-                                    <td>{{ $buku->judul }}</td>
-                                    <td>{{ $buku->penulis }}</td>
-                                    <td>{{ $buku->lokasi }}</td>
+                                    <td>{{ Str::limit($buku->image, 15) }}</td>
+                                    <td>{{ Str::limit($buku->judul, 20) }}</td>
+                                    <td>{{ Str::limit($buku->penulis, 10) }}</td>
+                                    <td>{{ Str::limit($buku->lokasi, 20) }}</td>
                                     <td>{{ $buku->jumlah }}</td>
                                     <td>{{ Str::limit($buku->deskripsi, 30) }}</td>
                                     <td>
-                                        <p class="badge p-2 {{ $buku->tersedia ? 'bg-green' : 'bg-yellow' }}">
+                                        <p
+                                            class="badge p-2 cursor-default {{ $buku->tersedia ? 'bg-green' : 'bg-yellow' }}">
                                             {{ $buku->tersedia ? 'Tersedia' : 'Tidak tersedia' }}
                                         </p>
                                     </td>

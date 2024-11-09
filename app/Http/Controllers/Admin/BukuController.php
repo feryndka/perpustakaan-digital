@@ -60,7 +60,7 @@ class BukuController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $request->validate([
             'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required|min:5',
             'penulis' => 'required',
@@ -69,7 +69,19 @@ class BukuController extends Controller
             'deskripsi' => 'required',
         ]);
 
-        Buku::where('id', $id)->update($validated);
+        $image = $request->file('image');
+        $nameFileImage = $image->getClientOriginalName();
+        $path = 'image/' . $nameFileImage;
+        Storage::disk('public')->put($path, file_get_contents($image));
+
+        Buku::where('id', $id)->update([
+            'image' => $nameFileImage,
+            'judul' => $request->judul,
+            'penulis' => $request->penulis,
+            'lokasi' => $request->lokasi,
+            'jumlah' => $request->jumlah,
+            'deskripsi' => $request->deskripsi,
+        ]);
 
         return redirect('/admin/buku');
     }
