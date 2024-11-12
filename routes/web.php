@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\Admin\BukuController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\AuthController;
@@ -14,6 +15,9 @@ Route::post('/registrasi/store', [AuthController::class, 'store'])->name('regist
 
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
+
+    Route::get('/admin/anggota', [AnggotaController::class, 'index'])->name('admin.anggota.index');
+    Route::delete('/admin/anggota/{idAnggota}', [AnggotaController::class, 'delete']);
 
     Route::get('/admin/buku', [BukuController::class, 'index'])->name('admin.buku.index');
     Route::get('/admin/buku/create', [BukuController::class, 'create']);

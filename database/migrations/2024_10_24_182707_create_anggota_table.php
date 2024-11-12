@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama'); // nama Anggota
             $table->string('alamat'); // alamat
-            $table->integer('noHP'); // noHP
+            $table->string('noHP'); // noHP
             $table->string('username')->unique(); //username
             $table->string('password'); // password login
             $table->enum('role', ['admin', 'user'])->default('user'); // role admin, peminjam, dll
