@@ -24,7 +24,7 @@
         <div class="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-5 pb-4">
             @foreach ($buku as $buku)
                 <!-- Katalog Buku -->
-                <a href="" class="rounded-lg overflow-hidden border-2 hover:shadow-md">
+                <a href="/user/dashboard/{{ $buku->id }}" class="rounded-lg overflow-hidden border-2 hover:shadow-md">
                     <img src="{{ asset('storage/image/' . $buku->image) }}" alt="buku"
                         class="w-full max-h-72 object-cover img-thumbnail">
                     <div class="p-2">

@@ -13,7 +13,7 @@
             <a class="user-panel px-3 py-1 nav-link" data-toggle="dropdown" href="#">
                 <img src="{{ asset('templates/dist/img/profile.png') }}" class="img-circle" alt="User Image">
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-lg">
                 <p class="dropdown-item dropdown-footer text-bold text-md cursor-default">{{ Auth::user()->nama }}</p>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item flex align-center gap-2">

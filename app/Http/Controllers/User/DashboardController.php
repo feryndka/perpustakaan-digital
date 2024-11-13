@@ -19,4 +19,11 @@ class DashboardController extends Controller
         $buku = $buku->paginate(10);
         return view("user.pages.dashboard.index", compact('buku', 'request'));
     }
+
+    public function detail($id)
+    {
+        $buku = Buku::findOrFail($id);
+
+        return view('user.pages.dashboard.detailBuku', ["buku" => $buku,]);
+    }
 }
