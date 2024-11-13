@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
 Route::group(['middleware' => 'auth:user'], function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard.index');
+    Route::get('/user/dashboard/{idBuku}', [UserDashboardController::class, 'detail']);
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
