@@ -7,12 +7,15 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
+// Login anggota
 Route::get('/', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/', [AuthController::class, 'verify'])->name('auth.verify');
 
+// Registrasi user
 Route::get('/registrasi', [AuthController::class, 'registrasi'])->middleware('guest');
 Route::post('/registrasi/store', [AuthController::class, 'store'])->name('registrasi.store');
 
+// Middleware untuk melindungi admin
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 
@@ -27,9 +30,11 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::delete('/admin/buku/{idBuku}', [BukuController::class, 'delete']);
 });
 
+// Middleware untuk melindungi user
 Route::group(['middleware' => 'auth:user'], function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard.index');
     Route::get('/user/dashboard/{idBuku}', [UserDashboardController::class, 'detail']);
 });
 
+// Logout anggota
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
