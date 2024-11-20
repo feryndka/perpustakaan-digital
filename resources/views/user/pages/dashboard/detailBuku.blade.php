@@ -1,7 +1,7 @@
 @extends('user.components.layout')
 
 @section('header')
-    <h1 class="text-bold">Detail Buku {{ $buku->judul }}</h1>
+    <h1 class="text-bold">Detail Buku</h1>
 @endsection
 
 @section('content')

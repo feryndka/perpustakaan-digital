@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
 
         Anggota::create([
             'nama' => 'Muhammad Farid',
-            'alamat' => 'Cimahi',
+            'alamat' => 'Bandung',
             'noHP' => "6689251892674",
             'username' => 'muhmmdfrd_',
             'password' => bcrypt('farid123'),
