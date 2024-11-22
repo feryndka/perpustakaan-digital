@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
             BukuSeeder::class,
 	]);
 
+
+	$this->call([
+            DataPeminjamanSeeder::class,
+	]);
+
         Anggota::create([
             'nama' => 'Fery Andika',
             'alamat' => 'Jakarta Timur',
