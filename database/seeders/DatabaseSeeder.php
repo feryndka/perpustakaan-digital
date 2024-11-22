@@ -13,6 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+	$this->call([
+            BukuSeeder::class,
+	]);
+
         Anggota::create([
             'nama' => 'Fery Andika',
             'alamat' => 'Jakarta Timur',
