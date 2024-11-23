@@ -1,0 +1,43 @@
+FROM php:8.2-fpm
+ARG user
+ARG uid
+
+# Update APT packages and install PHP extensions and other utilities
+RUN apt update && apt install -y \
+    unzip \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    # Add Node.js installation
+    nodejs \
+    npm
+
+# Clean up APT when done to save space
+RUN apt clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Copy Composer from the Composer image
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create a new user and set permissions
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
+
+WORKDIR /var/www
+
+# Switch to the new user
+USER $user
+
+# Install project dependencies using NPM, assuming package.json is present
+COPY package.json package-lock.json ./
+
+# Install NPM dependencies
+RUN npm install
+
+# Build the frontend assets
+RUN npm run build

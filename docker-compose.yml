@@ -6,7 +6,7 @@ services:
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    image: perpustakaan:0.1
+    image: perpustakaan:0.2
     container_name: perpustakan
     restart: unless-stopped
     working_dir: /var/www/
