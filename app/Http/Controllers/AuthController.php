@@ -22,11 +22,11 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'alamat' => 'required|min:5',
-            'noHP' => 'required',
-            'username' => 'required',
-            'password' => 'required',
+            'nama' => 'required|alpha|max:32', // hanya huruf, maks 32 karakter
+            'alamat' => 'required|alpha_num|min:5', // alphanumeric, minimal 5 karakter
+            'noHP' => 'required|numeric|min:10|max:13', // angka saja, minimal 10, maks 13 karakter
+            'username' => 'required|alpha_num|unique:anggota,username|min:6|max:32|not_regex:/\s/', // tanpa spasi, unik, minimal 6, maks 32 karakter
+            'password' => 'required|min:8|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*?&]/', // minimum 8 karakter, alphanumeric, dengan @$!%*?& diperbolehkan
         ]);
 
         Anggota::create([
