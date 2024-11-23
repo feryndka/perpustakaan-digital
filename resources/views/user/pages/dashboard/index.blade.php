@@ -25,7 +25,7 @@
             @foreach ($buku as $buku)
                 <!-- Katalog Buku -->
                 <a href="/user/dashboard/{{ $buku->id }}" class="rounded-lg overflow-hidden border-2 hover:shadow-md">
-                    <img src="{{ asset('storage/image/' . $buku->image) }}" alt="buku"
+                    <img src="{{ asset($buku->image) }}" alt="{{ $buku->judul  }}"
                         class="w-full max-h-72 object-cover img-thumbnail">
                     <div class="p-2">
                         <h5 class="text-bold text-lg text-black">{{ $buku->judul }}</h5>

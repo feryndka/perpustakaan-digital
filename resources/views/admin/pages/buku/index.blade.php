@@ -48,7 +48,7 @@
                             @foreach ($buku as $buku)
                                 <tr>
                                     <td>{{ $buku->id }}</td>
-                                    <td>{{ Str::limit($buku->image, 15) }}</td>
+                                    <td><img src="{{ asset($buku->image) }}" alt="{{ $buku->judul }}" width=150></td>
                                     <td>{{ Str::limit($buku->judul, 20) }}</td>
                                     <td>{{ Str::limit($buku->penulis, 10) }}</td>
                                     <td>{{ Str::limit($buku->lokasi, 20) }}</td>

@@ -8,7 +8,7 @@
     <div class="flex flex-col md:flex-row justify-center md:justify-start p-6 bg-white rounded-lg shadow-lg">
         <!-- Book Image Section -->
         <div class="w-full h-fit md:w-1/2 flex justify-center mb-6 md:mb-0">
-            <img src="{{ asset('storage/image/' . $buku->image) }}" alt="Book Cover" class="w-2/3 md:w-1/2">
+            <img src="{{ asset($buku->image) }}" alt="Book Cover" class="w-2/3 md:w-1/2">
         </div>
 
         <!-- Book Details Section -->

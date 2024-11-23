@@ -21,6 +21,12 @@
                             @error('image')
                                 <span class="invalid-feedback">*{{ $message }}</span>
                             @enderror
+			    <!-- Menampilkan nama file lama jika ada -->
+    			    @if($buku->image)
+        			<div class="mt-2">
+            			    <strong>File yang dipilih sebelumnya:</strong> <span>{{ basename($buku->image) }}</span>
+        			</div>
+    			    @endif
                         </div>
                         <div class="form-group">
                             <label for="judul" class="form-label">Judul Buku</label>
@@ -78,3 +84,4 @@
         </div>
     </div>
 @endsection
+
