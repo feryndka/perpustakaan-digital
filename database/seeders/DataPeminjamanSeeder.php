@@ -23,19 +23,25 @@ class DataPeminjamanSeeder extends Seeder
             $idPustakawan = rand(1, 2); // ID Pustakawan antara 1 dan 2
             $idBuku = rand(1, 5); // ID Buku antara 1 dan 5
 
-            // Membuat tanggal acak pada tahun 2024
             $tanggalPeminjaman = Carbon::create(2024, rand(1, 12), rand(1, 28)); // Menghasilkan tanggal acak
 
-            // Menambahkan data ke array
+            // 50% kemungkinan tanggal_kembali null
+            $tanggalKembali = (rand(0, 1) == 0) ? null : $tanggalPeminjaman->copy()->addWeek();
+
+            // Menentukan status berdasarkan tanggal kembali
+            $status = ($tanggalKembali == null) ? 'Dipinjam' : 'Kembali';
+
+
+            // Menambahkan data ke array, sesuaikan dengan kolom migrasi
             $peminjamanData[] = [
                 'idAnggota' => $idAnggota,
                 'idPustakawan' => $idPustakawan,
                 'idBuku' => $idBuku,
-                'tanggal_peminjaman' => $tanggalPeminjaman->toDateString(),
-                'tanggal_kembali' => $tanggalPeminjaman->copy()->addWeek()->toDateString(), // Menghitung tanggal kembali satu minggu kemudian
-                'status' => 'Dipinjam',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tanggal_peminjaman' => $tanggalPeminjaman,
+                'tanggal_kembali' => $tanggalKembali,
+                'status' => $status,
+                'createdOn' => now(),
+                'modifiedOn' => now(),
             ];
         }
 
