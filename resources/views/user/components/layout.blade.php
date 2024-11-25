@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ asset('templates/dist/css/adminlte.min.css') }}">
     {{-- Tailwind style --}}
     @vite('resources/css/app.css')
+    {{-- Sweet Alert 2 --}}
+    <link rel="stylesheet" href="sweetalert2.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -62,6 +64,41 @@
     <script src="{{ asset('templates/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('templates/dist/js/adminlte.min.js') }}"></script>
+    {{-- Sweet Alert 2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function pinjam_buku(button) {
+            Swal.fire({
+                title: "Peminjaman Buku",
+                text: "Apakah anda ingin meminjam buku ini?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.parentElement.submit();
+                };
+            });
+        }
+
+        @if (session('pinjam_buku'))
+            Swal.fire({
+                title: "Berhasil",
+                text: "Buku berhasil dipinjam. Silakan tunggu persetujuan.",
+                icon: "success"
+            });
+        @endif
+
+        @if (session('error_buku'))
+            Swal.fire({
+                title: "Buku Tidak Tersedia",
+                text: "Mohon maaf buku ini tidak tersedia untuk dipinjam.",
+                icon: "error"
+            });
+        @endif
+    </script>
 </body>
 
 </html>

@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\Admin\BukuController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
-use App\Http\Controllers\Admin\PinjamController;
+use App\Http\Controllers\Admin\PinjamController as AdminPinjamController;
+use App\Http\Controllers\User\PinjamController as UserPinjamController;
 use Illuminate\Support\Facades\Route;
 
 // Login anggota
@@ -29,17 +30,19 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/buku/edit/{idBuku}', [BukuController::class, 'edit']);
     Route::put('/admin/buku/{idBuku}', [BukuController::class, 'update']);
     Route::delete('/admin/buku/{idBuku}', [BukuController::class, 'delete']);
-    
-    Route::get('/admin/pinjam', [PinjamController::class, 'index'])->name('admin.pinjam.index');
-    Route::post('/admin/pinjam/{id}/approve', [PinjamController::class, 'approve'])->name('admin.pinjam.approve');
-    Route::delete('/admin/pinjam/{id}', [PinjamController::class, 'destroy'])->name('admin.pinjam.destroy');
+
+    Route::get('/admin/pinjam', [AdminPinjamController::class, 'index'])->name('admin.pinjam.index');
+    Route::post('/admin/pinjam/{id}/approve', [AdminPinjamController::class, 'approve'])->name('admin.pinjam.approve');
+    Route::delete('/admin/pinjam/{id}', [AdminPinjamController::class, 'destroy'])->name('admin.pinjam.destroy');
 });
 
 // Middleware untuk melindungi user
 Route::group(['middleware' => 'auth:user'], function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard.index');
-    Route::get('/user/dashboard/{idBuku}', [UserDashboardController::class, 'detail']);
-    Route::get('/user/dashboard/pinjam/', [UserDashboardController::class, 'pinjam']);
+    Route::get('/user/dashboard/{idBuku}', [UserDashboardController::class, 'detail'])->name('user.dashboard.detail');
+    Route::post('/user/dashboard/{idBuku}', [UserDashboardController::class, 'pinjam'])->name('user.dashboard.pinjam');
+
+    Route::get('/user/pinjam', [UserPinjamController::class, 'index'])->name('user.pinjam.index');
 });
 
 // Logout anggota

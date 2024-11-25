@@ -41,10 +41,13 @@
             <!-- Description -->
             <p class="text-gray-700 mb-4 text-justify">{{ $buku->deskripsi }}</p>
 
-            <!-- Borrow Button -->
-            <button class="bg-primary btn w-full">
-                Pinjam
-            </button>
+            {{-- Borrow Button --}}
+            <form action="{{ route('user.dashboard.pinjam', $buku->id) }}" method="POST">
+                @csrf
+                <button type="button" class="bg-primary btn w-full" onclick="pinjam_buku(this)">
+                    Pinjam
+                </button>
+            </form>
         </div>
     </div>
 @endsection
