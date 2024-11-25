@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Buku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BukuController extends Controller
 {
@@ -61,13 +62,13 @@ class BukuController extends Controller
         $image = $request->file('image');
         
         // Membuat nama file yang unik berdasarkan judul buku dan ekstensi gambar
-        $judulBuku = str_slug($request->judul); // Menggunakan slug untuk nama yang aman
+        $judulBuku = Str::slug($request->judul); // Menggunakan slug untuk nama yang aman
         $extension = $image->getClientOriginalExtension();
         $imageName = $judulBuku . '.' . $extension;
         $path = 'image/' . $imageName;
 
         // Simpan gambar ke storage
-        $image->storeAs('public/' . $path, $image->getClientOriginalName());
+        Storage::disk('public')->put($path, file_get_contents($image));
 
         // Tentukan nilai field `tersedia`
         $tersedia = $request->jumlah > 0; // true jika jumlah > 0, false jika tidak
