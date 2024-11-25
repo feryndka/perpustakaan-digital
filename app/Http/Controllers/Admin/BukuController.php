@@ -76,7 +76,7 @@ class BukuController extends Controller
             'tersedia' => $tersedia, // Simpan nilai tersedia
         ]);
 
-        return redirect('/admin/buku');
+        return redirect('/admin/buku')->with('added', true);
     }
 
     public function edit($id)
@@ -137,13 +137,13 @@ class BukuController extends Controller
             'tersedia' => $tersedia, // Simpan nilai tersedia
         ]);
 
-        return redirect('/admin/buku');
+        return redirect('/admin/buku')->with('updated', true);
     }
 
     public function delete($id)
     {
         $buku = Buku::where('id', $id)->delete();
 
-        return redirect('/admin/buku');
+        return redirect('/admin/buku')->with('deleted', true);
     }
 }
