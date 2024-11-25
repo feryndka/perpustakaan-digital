@@ -28,6 +28,7 @@ class BukuController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input dari pengguna
         $request->validate([
             'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required|min:5',
@@ -45,29 +46,35 @@ class BukuController extends Controller
             'judul.min' => 'Judul buku harus memiliki minimal :min karakter.',
 
             'penulis.required' => 'Nama penulis harus diisi.',
-
+            
             'lokasi.required' => 'Lokasi buku harus diisi.',
             'lokasi.min' => 'Lokasi buku harus memiliki minimal :min karakter.',
-
+            
             'jumlah.required' => 'Jumlah buku harus diisi.',
             'jumlah.integer' => 'Jumlah buku harus berupa angka.',
             'jumlah.min' => 'Jumlah buku tidak boleh kurang dari :min.',
-
+            
             'deskripsi.required' => 'Deskripsi buku harus diisi.',
         ]);
 
         // Upload image
         $image = $request->file('image');
-        $nameFileImage = $image->getClientOriginalName();
-        $path = 'image/' . $nameFileImage;
-        Storage::disk('public')->put($path, file_get_contents($image));
+        
+        // Membuat nama file yang unik berdasarkan judul buku dan ekstensi gambar
+        $judulBuku = str_slug($request->judul); // Menggunakan slug untuk nama yang aman
+        $extension = $image->getClientOriginalExtension();
+        $imageName = $judulBuku . '.' . $extension;
+        $path = 'image/' . $imageName;
+
+        // Simpan gambar ke storage
+        $image->storeAs('public/' . $path, $image->getClientOriginalName());
 
         // Tentukan nilai field `tersedia`
         $tersedia = $request->jumlah > 0; // true jika jumlah > 0, false jika tidak
 
         // Simpan data ke database
         Buku::create([
-            'image' => $nameFileImage,
+            'image' => 'storage/' . $path, // Path relatif yang disimpan ke DB
             'judul' => $request->judul,
             'penulis' => $request->penulis,
             'lokasi' => $request->lokasi,

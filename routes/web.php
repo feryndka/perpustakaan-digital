@@ -28,12 +28,16 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/buku/edit/{idBuku}', [BukuController::class, 'edit']);
     Route::put('/admin/buku/{idBuku}', [BukuController::class, 'update']);
     Route::delete('/admin/buku/{idBuku}', [BukuController::class, 'delete']);
+    
+    Route::get('/admin/pinjam', [PinjamController::class, 'index'])->name('admin.pinjam.index');
+    Route::get('/admin/pinjam/{idPermohonan}', [PinjamController::class, 'approval'])->('admin.pinjam.approval');
 });
 
 // Middleware untuk melindungi user
 Route::group(['middleware' => 'auth:user'], function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard.index');
     Route::get('/user/dashboard/{idBuku}', [UserDashboardController::class, 'detail']);
+    Route::get('/user/dashboard/pinjam/', [UserDashboardController::class, 'pinjam']);
 });
 
 // Logout anggota
