@@ -30,7 +30,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::delete('/admin/buku/{idBuku}', [BukuController::class, 'delete']);
     
     Route::get('/admin/pinjam', [PinjamController::class, 'index'])->name('admin.pinjam.index');
-    Route::get('/admin/pinjam/{idPermohonan}', [PinjamController::class, 'approval'])->name('admin.pinjam.approval');
+    Route::post('/admin/pinjam/{id}/approve', [PinjamController::class, 'approve'])->name('admin.pinjam.approve');
+    Route::delete('/admin/pinjam/{id}', [PinjamController::class, 'destroy'])->name('admin.pinjam.destroy');
 });
 
 // Middleware untuk melindungi user

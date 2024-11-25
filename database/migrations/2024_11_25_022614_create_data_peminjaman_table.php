@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('idBuku');
             $table->foreign('idBuku')->references('id')->on('buku')->onDelete('cascade');
             $table->enum('status', ['Persetujuan Peminjaman', 'Dipinjam', 'Persetujuan Pengembalian', 'Kembali', 'Terlambat'])->default('Dipinjam');
-            $table->date('tanggal_peminjaman');
+            $table->date('tanggal_peminjaman')->nullable();
             $table->date('tanggal_kembali')->nullable();
             $table->timestamp('createdOn');
             $table->timestamp('modifiedOn')->nullable();
