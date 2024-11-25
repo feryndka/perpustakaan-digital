@@ -32,16 +32,40 @@ class BukuController extends Controller
             'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required|min:5',
             'penulis' => 'required',
-            'lokasi' => 'required|min:3',
-            'jumlah' => 'required',
+            'lokasi' => 'required|min:5',
+            'jumlah' => 'required|integer|min:0',
             'deskripsi' => 'required',
+        ], [
+            'image.required' => 'Gambar harus diunggah.',
+            'image.image' => 'File yang diunggah harus berupa gambar.',
+            'image.mimes' => 'Gambar harus memiliki format jpeg, jpg, atau png.',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+
+            'judul.required' => 'Judul buku harus diisi.',
+            'judul.min' => 'Judul buku harus memiliki minimal :min karakter.',
+
+            'penulis.required' => 'Nama penulis harus diisi.',
+
+            'lokasi.required' => 'Lokasi buku harus diisi.',
+            'lokasi.min' => 'Lokasi buku harus memiliki minimal :min karakter.',
+
+            'jumlah.required' => 'Jumlah buku harus diisi.',
+            'jumlah.integer' => 'Jumlah buku harus berupa angka.',
+            'jumlah.min' => 'Jumlah buku tidak boleh kurang dari :min.',
+
+            'deskripsi.required' => 'Deskripsi buku harus diisi.',
         ]);
 
+        // Upload image
         $image = $request->file('image');
         $nameFileImage = $image->getClientOriginalName();
         $path = 'image/' . $nameFileImage;
         Storage::disk('public')->put($path, file_get_contents($image));
 
+        // Tentukan nilai field `tersedia`
+        $tersedia = $request->jumlah > 0; // true jika jumlah > 0, false jika tidak
+
+        // Simpan data ke database
         Buku::create([
             'image' => $nameFileImage,
             'judul' => $request->judul,
@@ -49,6 +73,7 @@ class BukuController extends Controller
             'lokasi' => $request->lokasi,
             'jumlah' => $request->jumlah,
             'deskripsi' => $request->deskripsi,
+            'tersedia' => $tersedia, // Simpan nilai tersedia
         ]);
 
         return redirect('/admin/buku');
@@ -69,15 +94,38 @@ class BukuController extends Controller
             'image' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'judul' => 'required|min:5',
             'penulis' => 'required',
-            'lokasi' => 'required|min:3',
-            'jumlah' => 'required',
+            'lokasi' => 'required|min:5',
+            'jumlah' => 'required|integer|min:0',
             'deskripsi' => 'required',
+        ], [
+            'image.required' => 'Gambar harus diunggah.',
+            'image.image' => 'File yang diunggah harus berupa gambar.',
+            'image.mimes' => 'Gambar harus memiliki format jpeg, jpg, atau png.',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+
+            'judul.required' => 'Judul buku harus diisi.',
+            'judul.min' => 'Judul buku harus memiliki minimal :min karakter.',
+
+            'penulis.required' => 'Nama penulis harus diisi.',
+
+            'lokasi.required' => 'Lokasi buku harus diisi.',
+            'lokasi.min' => 'Lokasi buku harus memiliki minimal :min karakter.',
+
+            'jumlah.required' => 'Jumlah buku harus diisi.',
+            'jumlah.integer' => 'Jumlah buku harus berupa angka.',
+            'jumlah.min' => 'Jumlah buku tidak boleh kurang dari :min.',
+
+            'deskripsi.required' => 'Deskripsi buku harus diisi.',
         ]);
 
+        // Upload image
         $image = $request->file('image');
         $nameFileImage = $image->getClientOriginalName();
         $path = 'image/' . $nameFileImage;
         Storage::disk('public')->put($path, file_get_contents($image));
+
+        // Tentukan nilai field `tersedia`
+        $tersedia = $request->jumlah > 0; // true jika jumlah > 0, false jika tidak
 
         Buku::where('id', $id)->update([
             'image' => $nameFileImage,
@@ -86,6 +134,7 @@ class BukuController extends Controller
             'lokasi' => $request->lokasi,
             'jumlah' => $request->jumlah,
             'deskripsi' => $request->deskripsi,
+            'tersedia' => $tersedia, // Simpan nilai tersedia
         ]);
 
         return redirect('/admin/buku');

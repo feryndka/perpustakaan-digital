@@ -32,33 +32,48 @@
     <div class="container">
         <div class="login-container bg-white p-4">
             <h2 class="text-center mb-4">Registrasi</h2>
-            <form action="{{ route('registrasi.store') }}" method="POST">
+            <form action="{{ route('registrasi.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap"
-                        required>
+                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
+                        name="nama" placeholder="Nama Lengkap" value="{{ old('nama') }}" required>
+                    @error('nama')
+                        <span class="invalid-feedback">*{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
-                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat"
-                        required>
+                    <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat"
+                        name="alamat" placeholder="Alamat" value="{{ old('alamat') }}" required>
+                    @error('alamat')
+                        <span class="invalid-feedback">*{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="noHP" class="form-label">Nomor Telepon</label>
-                    <input type="number" class="form-control" id="noHP" name="noHP" placeholder="Nomor Telepon"
-                        required>
+                    <input type="number" class="form-control @error('noHP') is-invalid @enderror" id="noHP"
+                        name="noHP" placeholder="Nomor Telepon" value="{{ old('noHP') }}" required>
+                    @error('noHP')
+                        <span class="invalid-feedback">*{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username"
-                        required>
+                    <input type="text" class="form-control @error('username') is-invalid @enderror" id="username"
+                        name="username" placeholder="Username" value="{{ old('username') }}" required>
+                    @error('username')
+                        <span class="invalid-feedback">*{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                        required>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                        name="password" placeholder="Password" value="{{ old('password') }}" required>
+                    @error('password')
+                        <span class="invalid-feedback">*{{ $message }}</span>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-dark w-100">Registrasi</button>
             </form>
