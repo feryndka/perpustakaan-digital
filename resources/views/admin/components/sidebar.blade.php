@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="templates/index3.html" class="brand-link">
+    <a href="/" class="brand-link">
         <img src="{{ asset('templates/dist/img/logo.png') }}" class="brand-image" style="opacity: .8">
         <span class="brand-text font-weight-dark">Perpustakaan Daring</span>
     </a>

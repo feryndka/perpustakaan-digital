@@ -16,7 +16,7 @@
                     <form action="{{ route('admin.buku.index') }}" method="get" class="input-group flex">
                         @csrf
                         <input class="form-control hover:shadow-md" name="search" type="search" placeholder="Search..."
-                            aria-label="Search">
+                            aria-label="Search" value="{{ request('search') }}">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-sidebar bg-dark">
                                 <i class="fas fa-search fa-fw"></i>

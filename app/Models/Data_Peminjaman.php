@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Data_Peminjaman extends Model
 {
-    protected $guarded =[];
+    protected $guarded = [];
     protected $table = 'data_peminjaman';
+
+    const CREATED_AT = 'createdOn'; // Ganti kolom created_at
+    const UPDATED_AT = 'modifiedOn'; // Ganti kolom updated_at
 
     public function anggota()
     {
-        return $this->belongsTo(Anggota::class, 'anggota_id'); // Changed to 'anggota_id'
+        return $this->belongsTo(Anggota::class, 'idAnggota'); // Changed to 'idAnggota'
     }
 
     public function buku()

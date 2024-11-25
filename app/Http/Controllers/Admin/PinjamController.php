@@ -14,24 +14,42 @@ class PinjamController extends Controller
 {
     public function index(Request $request)
     {
-        // Eager load and paginate
-        $peminjaman = Data_Peminjaman::with(['anggota', 'buku']) // Eager loading
-            ->where('status', 'Persetujuan Peminjaman')
-            ->paginate(5); // Paginate the results with 5 items per page
+        // Query awal untuk Data_Peminjaman dengan eager loading
+        $query = Data_Peminjaman::with(['anggota', 'buku']);
 
-        // Transform the paginated data to add anggota and buku names
+        // Cek apakah ada parameter search
+        if ($request->has('search') && !empty($request->input('search'))) {
+            $searchTerm = $request->input('search');
+
+            $query->where(function ($q) use ($searchTerm) {
+                // Filter berdasarkan nama anggota
+                $q->whereHas('anggota', function ($anggotaQuery) use ($searchTerm) {
+                    $anggotaQuery->where('nama', 'LIKE', "%{$searchTerm}%");
+                });
+
+                // Filter berdasarkan judul buku
+                $q->orWhereHas('buku', function ($bukuQuery) use ($searchTerm) {
+                    $bukuQuery->where('judul', 'LIKE', "%{$searchTerm}%");
+                });
+            });
+        }
+
+        // Ambil data dengan pagination
+        $peminjaman = $query->where('status', 'Persetujuan Peminjaman')->paginate(5);
+
+        // Transformasi data untuk hasil
         $result = $peminjaman->map(function ($item) {
             return [
                 'createdOn' => $item->createdOn,
-                'idAnggota' => $item->anggota->nama ?? null, // Get the name from the anggota
-                'idBuku' => $item->buku->judul ?? null, // Get the title from the buku
+                'idAnggota' => $item->anggota->nama ?? null, // Ambil nama anggota
+                'idBuku' => $item->buku->judul ?? null, // Ambil judul buku
                 'status' => $item->status,
-                'id' => $item->id // Ensure to include the ID for deletion
+                'id' => $item->id // Sertakan ID untuk aksi lainnya
             ];
         });
 
-        // Pass the paginated data and the transformed result to the view
-        return view('admin.pages.pinjam.index', compact('result', 'peminjaman'));
+        // Kirim data ke view
+        return view('admin.pages.pinjam.index', compact('result', 'peminjaman', 'request'));
     }
 
     // Function to delete a Data_Peminjaman instance
@@ -42,7 +60,7 @@ class PinjamController extends Controller
         $peminjaman->delete();
 
         // Redirect back with a success message
-        return redirect()->route('admin.pinjam.index')->with('deleted', true);
+        return redirect()->route('admin.pinjam.index')->with('rejected', true);
     }
 
     // Approve function

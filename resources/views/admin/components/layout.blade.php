@@ -105,6 +105,52 @@
                 icon: "success"
             });
         @endif
+
+        function approve_peminjaman(button) {
+            Swal.fire({
+                title: "Terima Peminjaman Buku",
+                text: "Apakah anda ingin menyetujui peminjaman ini?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.parentElement.submit();
+                };
+            });
+        }
+
+        @if (session('approved'))
+            Swal.fire({
+                title: "Berhasil",
+                text: "Peminjaman Berhasil!",
+                icon: "success"
+            });
+        @endif
+
+        function reject_peminjaman(button) {
+            Swal.fire({
+                title: "Tolak Peminjaman Buku",
+                text: "Apakah anda ingin menolak peminjaman ini?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.parentElement.submit();
+                };
+            });
+        }
+
+        @if (session('rejected'))
+            Swal.fire({
+                title: "Berhasil",
+                text: "Peminjaman Berhasil!",
+                icon: "success"
+            });
+        @endif
     </script>
 </body>
 

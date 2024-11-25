@@ -16,7 +16,7 @@
                     <form action="{{ route('admin.pinjam.index') }}" method="get" class="input-group flex">
                         @csrf
                         <input class="form-control hover:shadow-md" name="search" type="search" placeholder="Search..."
-                            aria-label="Search">
+                            aria-label="Search" value="{{ request('search') }}">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-sidebar bg-dark">
                                 <i class="fas fa-search fa-fw"></i>
@@ -29,37 +29,44 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>No.</th>
+                                <th>No</th>
                                 <th>Nama Anggota</th>
-                                <th>Buku Judul</th>
+                                <th>Judul Buku</th>
                                 <th>Tanggal Permohonan</th>
                                 <th>Status</th>
-                                <th>Aksi</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {{-- Looping through data_peminjaman --}}
                             @foreach ($result as $item)
-                            <tr>
-                                <td>{{ $item['id'] }}</td>
-                                <td>{{ $item['idAnggota'] }}</td>
-                                <td>{{ $item['idBuku'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item['createdOn'])->format('d/m/Y') }}</td>
-                                <td>{{ $item['status'] }}</td>
-                                <td class="d-flex justify-content-center">
-                                    {{-- Approve Button --}}
-                                    <form action="{{ route('admin.pinjam.approve', $item['id']) }}" method="POST" class="mr-2">
-                                        @csrf
-                                        <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Apakah Anda ingin menyetujui peminjaman ini?');">Pinjam</button>
-                                    </form>
-                                    {{-- Delete Button --}}
-                                    <form action="{{ route('admin.pinjam.destroy', $item['id']) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda ingin menolak peminjaman ini?');">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $item['id'] }}</td>
+                                    <td>{{ $item['idAnggota'] }}</td>
+                                    <td>{{ $item['idBuku'] }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item['createdOn'])->format('d/m/Y') }}</td>
+                                    <td>
+                                        <p class="badge p-2 cursor-default bg-primary">
+                                            {{ $item['status'] }}
+                                        </p>
+                                    </td>
+                                    <td class="d-flex justify-content-center">
+                                        {{-- Approve Button --}}
+                                        <form action="{{ route('admin.pinjam.approve', $item['id']) }}" method="POST"
+                                            class="mr-2">
+                                            @csrf
+                                            <button type="button" class="btn btn-sm btn-success"
+                                                onclick="approve_peminjaman(this)">Terima</button>
+                                        </form>
+                                        {{-- Delete Button --}}
+                                        <form action="{{ route('admin.pinjam.destroy', $item['id']) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                onclick="reject_peminjaman(this)">Tolak</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

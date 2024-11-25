@@ -13,7 +13,7 @@
         <form action="{{ route('user.dashboard.index') }}" method="get" class="input-group flex justify-center mb-6">
             @csrf
             <input class="form-control max-w-md hover:shadow-md" name="search" type="search" placeholder="Search..."
-                aria-label="Search">
+                aria-label="Search" value="{{ request('search') }}">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-sidebar bg-dark">
                     <i class="fas fa-search fa-fw"></i>
@@ -25,7 +25,7 @@
             @foreach ($buku as $buku)
                 <!-- Katalog Buku -->
                 <a href="/user/dashboard/{{ $buku->id }}" class="rounded-lg overflow-hidden border-2 hover:shadow-md">
-                    <img src="{{ asset($buku->image) }}" alt="{{ $buku->judul  }}"
+                    <img src="{{ asset($buku->image) }}" alt="{{ $buku->judul }}"
                         class="w-full max-h-72 object-cover img-thumbnail">
                     <div class="p-2">
                         <h5 class="text-bold text-lg text-black">{{ $buku->judul }}</h5>
