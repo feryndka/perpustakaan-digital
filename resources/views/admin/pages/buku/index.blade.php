@@ -67,7 +67,8 @@
                                             <form action="/admin/buku/{{ $buku->id }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm bg-danger">Hapus</button>
+                                                <button type="button" onclick="hapus(this)"
+                                                    class="btn btn-sm bg-danger">Hapus</button>
                                             </form>
                                         </div>
                                     </td>

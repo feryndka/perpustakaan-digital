@@ -25,6 +25,6 @@ class AnggotaController extends Controller
     {
         $buku = Anggota::where('id', $id)->delete();
 
-        return redirect('/admin/anggota');
+        return redirect('/admin/anggota')->with('deleted', true);
     }
 }

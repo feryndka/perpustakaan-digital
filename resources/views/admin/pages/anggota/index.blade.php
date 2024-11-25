@@ -59,7 +59,8 @@
                                             <form action="/admin/anggota/{{ $user->id }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm bg-danger">Blokir</button>
+                                                <button type="button" onclick="hapus(this)"
+                                                    class="btn btn-sm bg-danger">Blokir</button>
                                             </form>
                                         </div>
                                     </td>
