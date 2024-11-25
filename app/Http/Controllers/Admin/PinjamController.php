@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Data_Peminjaman;
+use App\Models\Anggota;
 use App\Models\Buku;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -22,7 +23,7 @@ class PinjamController extends Controller
         $result = $peminjaman->map(function ($item) {
             return [
                 'createdOn' => $item->createdOn,
-                'idAnggota' => $item->anggota->name ?? null, // Get the name from the anggota
+                'idAnggota' => $item->anggota->nama ?? null, // Get the name from the anggota
                 'idBuku' => $item->buku->judul ?? null, // Get the title from the buku
                 'status' => $item->status,
                 'id' => $item->id // Ensure to include the ID for deletion
@@ -30,7 +31,7 @@ class PinjamController extends Controller
         });
 
         // Pass the paginated data and the transformed result to the view
-        return view('admin.pages.pinjam.approved', compact('result', 'peminjaman'));
+        return view('admin.pages.pinjam.index', compact('result', 'peminjaman'));
     }
 
     // Function to delete a Data_Peminjaman instance

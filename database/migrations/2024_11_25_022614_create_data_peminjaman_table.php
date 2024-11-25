@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('data_peminjaman', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('idAnggota');
-            $table->unsignedBigInteger('idPustakawan');
+            $table->unsignedBigInteger('idPustakawan')->nullable();
             $table->foreign('idAnggota')->references('id')->on('anggota')->onDelete('cascade');
-            $table->foreign('idPustakawan')->references('id')->on('anggota')->onDelete('cascade');
+            $table->foreign('idPustakawan')->references('id')->on('anggota')->onDelete('set null');
             $table->unsignedBigInteger('idBuku');
             $table->foreign('idBuku')->references('id')->on('buku')->onDelete('cascade');
             $table->enum('status', ['Persetujuan Peminjaman', 'Dipinjam', 'Persetujuan Pengembalian', 'Kembali', 'Terlambat'])->default('Dipinjam');

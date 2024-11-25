@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BukuController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\Admin\PinjamController;
 use Illuminate\Support\Facades\Route;
 
 // Login anggota

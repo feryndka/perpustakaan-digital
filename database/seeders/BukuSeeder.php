@@ -17,7 +17,7 @@ class BukuSeeder extends Seeder
     {
         DB::table('buku')->insert([
             [
-                'image' => asset(storage/image/sang_pemimpi.jpg'), // URL gambar untuk Sang Pemimpi
+                'image' => 'storage/image/sang-pemimpi.jpg',
                 'judul' => 'Sang Pemimpi',
                 'penulis' => 'Andrea Hirata',
                 'lokasi' => '895.922',
@@ -26,7 +26,7 @@ class BukuSeeder extends Seeder
                 'tersedia' => true,
             ],
             [
-                'image' => asset(storage/image/laskar_pelangi.jpg'), // URL gambar untuk Laskar Pelangi
+                'image' => 'storage/image/laskar-pelangi.jpg',
                 'judul' => 'Laskar Pelangi',
                 'penulis' => 'Andrea Hirata',
                 'lokasi' => '895.922',
@@ -35,7 +35,7 @@ class BukuSeeder extends Seeder
                 'tersedia' => true,
             ],
             [
-                'image' => asset(storage/image/hujan.jpg'), // URL gambar untuk Di Balik Cahaya
+                'image' => 'storage/image/hujan.jpg',
                 'judul' => 'Hujan',
                 'penulis' => 'Tere Liye',
                 'lokasi' => '895.922',
@@ -44,7 +44,7 @@ class BukuSeeder extends Seeder
                 'tersedia' => true,
             ],
             [
-                'image' => asset(storage/image/ketika_cinta_bertasbih.jpg'), // URL gambar untuk Ketika Cinta Bertasbih
+                'image' => 'storage/image/ketika-cinta-bertasbih.jpg',
                 'judul' => 'Ketika Cinta Bertasbih',
                 'penulis' => 'Habiburrahman El Shirazy',
                 'lokasi' => '298.2',
@@ -53,7 +53,7 @@ class BukuSeeder extends Seeder
                 'tersedia' => false,
             ],
             [
-                'image' => asset(storage/image/perahu_kertas.jpg'), // URL gambar untuk Rumah yang Kehilangan
+                'image' => 'storage/image/perahu-kertas.jpg',
                 'judul' => 'Perahu Kertas',
                 'penulis' => 'Dee Lestari',
                 'lokasi' => '895.922',
