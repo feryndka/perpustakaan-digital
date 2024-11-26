@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Data_Peminjaman;
+use App\Models\Buku;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -65,6 +66,10 @@ class KembaliController extends Controller
         $peminjaman->tanggal_kembali = Carbon::now(); // Set date pengembalian
         $peminjaman->status = 'Kembali'; // Change status
         $peminjaman->modifiedOn = Carbon::now(); // Set modifiedOn to now
+
+        $buku = Buku::findOrFail($peminjaman->idBuku); // Find the associated book
+        $buku->jumlah += 1; // Increase quantity by 1, return borrowed book
+        $buku->save(); // Save the updated book record
 
         // Save changes to the Data_Peminjaman record
         $peminjaman->save();

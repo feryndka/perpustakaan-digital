@@ -105,44 +105,40 @@ class BukuController extends Controller
             'lokasi' => 'required|min:5',
             'jumlah' => 'required|integer|min:0',
             'deskripsi' => 'required',
-        ], [
-            'image.required' => 'Gambar harus diunggah.',
-            'image.image' => 'File yang diunggah harus berupa gambar.',
-            'image.mimes' => 'Gambar harus memiliki format jpeg, jpg, atau png.',
-            'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
-
-            'judul.required' => 'Judul buku harus diisi.',
-            'judul.min' => 'Judul buku harus memiliki minimal :min karakter.',
-
-            'penulis.required' => 'Nama penulis harus diisi.',
-
-            'lokasi.required' => 'Lokasi buku harus diisi.',
-            'lokasi.min' => 'Lokasi buku harus memiliki minimal :min karakter.',
-
-            'jumlah.required' => 'Jumlah buku harus diisi.',
-            'jumlah.integer' => 'Jumlah buku harus berupa angka.',
-            'jumlah.min' => 'Jumlah buku tidak boleh kurang dari :min.',
-
-            'deskripsi.required' => 'Deskripsi buku harus diisi.',
         ]);
 
-        // Upload image
+        $buku = Buku::findOrFail($id);
+
+        // Cek kalau cover lama sudah ada dan delete
+        if ($buku->image) { // Jika ada gambar
+            // Ensure the old image path is correct.
+            $oldImagePath = str_replace('storage/', '', $buku->image); // Removing 'storage/' for deletion check
+            if (Storage::disk('public')->exists($oldImagePath)) {
+                Storage::disk('public')->delete($oldImagePath); // Delete the old image
+            }
+        }
+
+        // Upload new image
         $image = $request->file('image');
-        $nameFileImage = $image->getClientOriginalName();
-        $path = 'image/' . $nameFileImage;
-        Storage::disk('public')->put($path, file_get_contents($image));
+        $judulBuku = Str::slug($request->judul); // Use slug for a safe name
+        $extension = $image->getClientOriginalExtension();
+        $imageName = $judulBuku . '.' . $extension;
+
+        // Store the new image
+        $path = $image->storeAs('image', $imageName, 'public');
 
         // Tentukan nilai field `tersedia`
-        $tersedia = $request->jumlah > 0; // true jika jumlah > 0, false jika tidak
+        $tersedia = $request->jumlah > 0; // true if jumlah > 0
 
-        Buku::where('id', $id)->update([
-            'image' => $nameFileImage,
+        // Update the book's details
+        $buku->update([
+            'image' => 'storage/' . $path, // Store the relative path
             'judul' => $request->judul,
             'penulis' => $request->penulis,
             'lokasi' => $request->lokasi,
             'jumlah' => $request->jumlah,
             'deskripsi' => $request->deskripsi,
-            'tersedia' => $tersedia, // Simpan nilai tersedia
+            'tersedia' => $tersedia, // Save availability status
         ]);
 
         return redirect('/admin/buku')->with('updated', true);
