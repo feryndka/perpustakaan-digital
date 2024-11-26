@@ -38,6 +38,7 @@ class DataPeminjamanSeeder extends Seeder
                 'idPustakawan' => $idPustakawan,
                 'idBuku' => $idBuku,
                 'tanggal_peminjaman' => $tanggalPeminjaman,
+                'batas_pengembalian' => null,
                 'tanggal_kembali' => $tanggalKembali,
                 'status' => $status,
                 'createdOn' => now(),

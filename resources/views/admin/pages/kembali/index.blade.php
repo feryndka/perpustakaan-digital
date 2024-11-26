@@ -1,7 +1,7 @@
-@extends('user.components.layout')
+@extends('admin.components.layout')
 
 @section('header')
-    <h1 class="text-center text-bold">PEMINJAMAN BUKU</h1>
+    <h1 class="text-center text-bold">PENGEMBALIAN BUKU</h1>
     <div class="flex justify-center pt-2">
         <div class="h-1 bg-black rounded w-20"></div>
     </div>
@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="form-inline flex justify-between p-3">
                     {{-- Search bar --}}
-                    <form action="{{ route('user.pinjam.index') }}" method="get" class="input-group flex">
+                    <form action="{{ route('admin.kembali.index') }}" method="get" class="input-group flex">
                         @csrf
                         <input class="form-control hover:shadow-md" name="search" type="search" placeholder="Search..."
                             aria-label="Search" value="{{ request('search') }}">
@@ -30,11 +30,11 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Nama Anggota</th>
                                 <th>Judul Buku</th>
-                                <th>Penulis</th>
                                 <th>Tanggal Peminjaman</th>
                                 <th>Batas Pengembalian</th>
-                                <th>Tanggal Pengembalian</th>
+                                <th>Tanggal Kembali</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -43,10 +43,9 @@
                             {{-- Looping through data_peminjaman --}}
                             @foreach ($result as $item)
                                 <tr>
-                                    {{-- @dd($item) --}}
                                     <td>{{ $item['id'] }}</td>
-                                    <td>{{ $item['idBuku']->judul }}</td>
-                                    <td>{{ $item['idBuku']->penulis }}</td>
+                                    <td>{{ $item['idAnggota'] }}</td>
+                                    <td>{{ $item['idBuku'] }}</td>
                                     <td>{{ $item['tanggal_peminjaman'] }}</td>
                                     <td>{{ $item['batas_pengembalian'] }}</td>
                                     <td>{{ $item['tanggal_kembali'] }}</td>
@@ -55,24 +54,26 @@
                                             {{ $item['status'] }}
                                         </p>
                                     </td>
-                                    {{-- Approve Button (Pengembalian) --}}
-                                    @if ($item['status'] === 'Dipinjam')
+                                    @if ($item['status'] === 'Persetujuan Pengembalian')
                                         <td class="d-flex justify-content-center">
-                                            <form action="{{ route('user.return.book', $item['id']) }}" method="POST"
+                                            {{-- Approve Button --}}
+                                            <form action="{{ route('admin.kembali.approve', $item['id']) }}" method="POST"
                                                 class="mr-2">
                                                 @csrf
                                                 <button type="button" class="btn btn-sm btn-success"
-                                                    onclick="pengembalian_buku(this)">Pengembalian</button>
+                                                    onclick="approve_pengembalian(this)">Terima</button>
                                             </form>
-                                            {{-- Delete Button (Perpanjang) --}}
-                                            <form action="{{ route('admin.pinjam.destroy', $item['id']) }}" method="POST">
+                                            {{-- Delete Button --}}
+                                            <form action="{{ route('admin.kembali.destroy', $item['id']) }}"
+                                                method="POST">
                                                 @csrf
+                                                @method('DELETE')
                                                 <button type="button" class="btn btn-sm btn-danger"
-                                                    onclick="">Perpanjang</button>
+                                                    onclick="reject_pengembalian(this)">Tolak</button>
                                             </form>
                                         </td>
                                     @else
-                                        {{-- Teks atau tombol alternatif untuk status selain "Dipinjam" --}}
+                                        {{-- Saat status selain "Persetujuan Pengembalian" --}}
                                         <td>
                                             <p class="text-muted cursor-default">Tidak tersedia</p>
                                         </td>
@@ -83,7 +84,7 @@
                     </table>
                     {{-- Pagination --}}
                     <div class="pagination flex justify-center mt-4">
-                        {{ $peminjaman->links('pagination::bootstrap-4') }} <!-- Display pagination links -->
+                        {{ $data->links('pagination::bootstrap-4') }} <!-- Display pagination links -->
                     </div>
                 </div>
             </div>

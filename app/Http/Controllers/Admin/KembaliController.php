@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Data_Peminjaman;
-use App\Models\Anggota;
-use App\Models\Buku;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
-class PinjamController extends Controller
+class KembaliController extends Controller
 {
     public function index(Request $request)
     {
@@ -34,61 +31,56 @@ class PinjamController extends Controller
             });
         }
 
+        // Filter status agar tidak termasuk "Persetujuan Peminjaman"
+        $query->whereNotIn('status', ['Persetujuan Peminjaman']);
+
         // Ambil data dengan pagination
-        $peminjaman = $query->where('status', 'Persetujuan Peminjaman')->paginate(5);
+        $data = $query->paginate(5);
 
         // Transformasi data untuk hasil
-        $result = $peminjaman->map(function ($item) {
+        $result = $data->map(function ($item) {
             return [
-                'createdOn' => $item->createdOn,
+                'id' => $item->id,
                 'idAnggota' => $item->anggota->nama ?? null, // Ambil nama anggota
                 'idBuku' => $item->buku->judul ?? null, // Ambil judul buku
+                'tanggal_peminjaman' => $item->tanggal_peminjaman,
+                'batas_pengembalian' => $item->batas_pengembalian,
+                'tanggal_kembali' => $item->tanggal_kembali,
                 'status' => $item->status,
-                'id' => $item->id // Sertakan ID untuk aksi lainnya
+                'createdOn' => $item->createdOn
             ];
         });
 
         // Kirim data ke view
-        return view('admin.pages.pinjam.index', compact('result', 'peminjaman', 'request'));
+        return view('admin.pages.kembali.index', compact('result', 'data', 'request'));
     }
 
-    // Function to delete a Data_Peminjaman instance
-    public function destroy($id)
-    {
-        // Find and delete the instance of Data_Peminjaman
-        $peminjaman = Data_Peminjaman::findOrFail($id); // Finds the record or throws an exception
-        $peminjaman->delete();
-
-        // Redirect back with a success message
-        return redirect()->route('admin.pinjam.index')->with('rejected', true);
-    }
-
-    // Approve function
+    // Approve Pengembalian function
     public function approve($id)
     {
         // Find the Data_Peminjaman record by ID
         $peminjaman = Data_Peminjaman::findOrFail($id); // Throws an exception if not found
 
         // Update the record
-        $peminjaman->tanggal_peminjaman = Carbon::now(); // Set current date
-        $peminjaman->batas_pengembalian = Carbon::now()->addDays(7); // Set 7 days after peminjaman
-        $peminjaman->status = 'Dipinjam'; // Change status
+        $peminjaman->tanggal_kembali = Carbon::now(); // Set date pengembalian
+        $peminjaman->status = 'Kembali'; // Change status
         $peminjaman->modifiedOn = Carbon::now(); // Set modifiedOn to now
-        $peminjaman->idPustakawan = Auth::id(); // Set idPustakawan to current user ID
-
-        // Reduce the quantity in the Buku table
-        $buku = Buku::findOrFail($peminjaman->idBuku); // Find the associated book
-        if ($buku->jumlah > 0) { // Ensure there are books available
-            $buku->jumlah -= 1; // Decrease quantity by 1
-            $buku->save(); // Save the updated book record
-        } else {
-            return redirect()->back()->with('error', 'Tidak ada buku yang tersedia untuk dipinjam.');
-        }
 
         // Save changes to the Data_Peminjaman record
         $peminjaman->save();
 
         // Redirect back with a success message
-        return redirect()->route('admin.pinjam.index')->with('approved', true);
+        return redirect()->route('admin.kembali.index')->with('approved_pengembalian', true);
+    }
+
+    // Function to delete a Data_Peminjaman instance
+    public function destroy($id)
+    {
+        // Find and delete the instance of Data_Peminjaman
+        $data = Data_Peminjaman::findOrFail($id); // Finds the record or throws an exception
+        $data->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('admin.kembali.index')->with('rejected_pengembalian', true);
     }
 }

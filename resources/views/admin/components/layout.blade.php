@@ -124,7 +124,7 @@
         @if (session('approved'))
             Swal.fire({
                 title: "Berhasil",
-                text: "Peminjaman Berhasil!",
+                text: "Peminjaman berhasil!",
                 icon: "success"
             });
         @endif
@@ -146,9 +146,55 @@
 
         @if (session('rejected'))
             Swal.fire({
+                title: "Gagal",
+                text: "Peminjaman ditolak!",
+                icon: "error"
+            });
+        @endif
+
+        function approve_pengembalian(button) {
+            Swal.fire({
+                title: "Terima Pengembalian Buku",
+                text: "Apakah anda ingin menyetujui pengembalian buku ini?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.parentElement.submit();
+                };
+            });
+        }
+
+        @if (session('approved_pengembalian'))
+            Swal.fire({
                 title: "Berhasil",
-                text: "Peminjaman Berhasil!",
+                text: "Pengembalian berhasil!",
                 icon: "success"
+            });
+        @endif
+
+        function reject_pengembalian(button) {
+            Swal.fire({
+                title: "Tolak Pengembalian Buku",
+                text: "Apakah anda ingin menolak pengembalian buku ini?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.parentElement.submit();
+                };
+            });
+        }
+
+        @if (session('rejected_pengembalian'))
+            Swal.fire({
+                title: "Gagal",
+                text: "Pengembalian ditolak!",
+                icon: "error"
             });
         @endif
     </script>

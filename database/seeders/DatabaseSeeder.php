@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             AnggotaSeeder::class,
         ]);
 
-        $this->call([
-            DataPeminjamanSeeder::class,
-        ]);
+        // $this->call([
+        //     DataPeminjamanSeeder::class,
+        // ]);
     }
 }

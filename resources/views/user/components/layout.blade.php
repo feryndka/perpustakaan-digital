@@ -98,6 +98,29 @@
                 icon: "error"
             });
         @endif
+
+        function pengembalian_buku(button) {
+            Swal.fire({
+                title: "Pengembalian Buku",
+                text: "Apakah anda ingin mengembalikan buku ini?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.parentElement.submit();
+                };
+            });
+        }
+
+        @if (session('pengembalian_buku'))
+            Swal.fire({
+                title: "Berhasil",
+                text: "Silakan kembalikan buku ke pustakawan",
+                icon: "success"
+            });
+        @endif
     </script>
 </body>
 

@@ -3,9 +3,12 @@
 use App\Http\Controllers\Admin\AnggotaController;
 use App\Http\Controllers\Admin\BukuController;
 use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\Admin\KembaliController as AdminKembaliController;
 use App\Http\Controllers\Admin\PinjamController as AdminPinjamController;
+
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\PinjamController as UserPinjamController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +37,10 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/admin/pinjam', [AdminPinjamController::class, 'index'])->name('admin.pinjam.index');
     Route::post('/admin/pinjam/{id}/approve', [AdminPinjamController::class, 'approve'])->name('admin.pinjam.approve');
     Route::delete('/admin/pinjam/{id}', [AdminPinjamController::class, 'destroy'])->name('admin.pinjam.destroy');
+
+    Route::get('/admin/kembali', [AdminKembaliController::class, 'index'])->name('admin.kembali.index');
+    Route::post('/admin/kembali/{id}/approve', [AdminKembaliController::class, 'approve'])->name('admin.kembali.approve');
+    Route::delete('/admin/kembali/{id}', [AdminKembaliController::class, 'destroy'])->name('admin.kembali.destroy');
 });
 
 // Middleware untuk melindungi user
@@ -43,6 +50,7 @@ Route::group(['middleware' => 'auth:user'], function () {
     Route::post('/user/dashboard/{idBuku}', [UserDashboardController::class, 'pinjam'])->name('user.dashboard.pinjam');
 
     Route::get('/user/pinjam', [UserPinjamController::class, 'index'])->name('user.pinjam.index');
+    Route::post('/user/pinjam/{id}/return', [UserPinjamController::class, 'return'])->name('user.return.book'); // route pengembalian buku
 });
 
 // Logout anggota

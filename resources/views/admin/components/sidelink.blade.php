@@ -45,7 +45,7 @@
     </a>
 </li>
 <li class="nav-item mb-2">
-    <a href="/admin/pengembalian" class="{{ request()->is('admin/pengembalian*') ? 'active' : '' }} nav-link">
+    <a href="/admin/kembali" class="{{ request()->is('admin/kembali*') ? 'active' : '' }} nav-link">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
             class="bi bi-bookmark-check-fill nav-icon fas fa-th" viewBox="0 0 16 16">
             <path fill-rule="evenodd"

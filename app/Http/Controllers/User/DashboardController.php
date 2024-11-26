@@ -47,7 +47,6 @@ class DashboardController extends Controller
             'idAnggota' => $idAnggota,
             'idBuku' => $buku->id,
             'status' => 'Persetujuan Peminjaman',
-            'tanggal_peminjaman' => now(), // Set tanggal peminjaman ke waktu sekarang
             'createdOn' => now(),         // Set waktu pembuatan data
         ]);
 

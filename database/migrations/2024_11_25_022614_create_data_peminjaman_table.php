@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('idBuku')->references('id')->on('buku')->onDelete('cascade');
             $table->enum('status', ['Persetujuan Peminjaman', 'Dipinjam', 'Persetujuan Pengembalian', 'Kembali', 'Terlambat'])->default('Dipinjam');
             $table->date('tanggal_peminjaman')->nullable();
+            $table->date('batas_pengembalian')->nullable();
             $table->date('tanggal_kembali')->nullable();
             $table->timestamp('createdOn');
             $table->timestamp('modifiedOn')->nullable();

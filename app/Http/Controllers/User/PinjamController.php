@@ -7,6 +7,7 @@ use App\Models\Buku;
 use App\Models\Data_Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PinjamController extends Controller
 {
@@ -43,6 +44,7 @@ class PinjamController extends Controller
                 'idBuku' => $item->buku ?? null,
                 'status' => $item->status,
                 'tanggal_peminjaman' => $item->tanggal_peminjaman,
+                'batas_pengembalian' => $item->batas_pengembalian,
                 'tanggal_kembali' => $item->tanggal_kembali,
                 'createdOn' => $item->createdOn,
             ];
@@ -50,5 +52,21 @@ class PinjamController extends Controller
 
         // Kirim data ke view
         return view('user.pages.peminjaman.index', compact('result', 'peminjaman', 'request'));
+    }
+
+    public function return($id)
+    {
+        // Find the Data_Peminjaman record by ID
+        $peminjaman = Data_Peminjaman::findOrFail($id); // Throws an exception if not found
+
+        // Update the record
+        $peminjaman->status = 'Persetujuan Pengembalian'; // Change status
+        $peminjaman->modifiedOn = Carbon::now(); // Set modifiedOn to now
+
+        // Save changes to the Data_Peminjaman record
+        $peminjaman->save();
+
+        // Redirect back with a success message
+        return redirect()->route('user.pinjam.index')->with('pengembalian_buku', true);
     }
 }
