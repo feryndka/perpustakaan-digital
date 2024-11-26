@@ -192,7 +192,7 @@
 
         @if (session('rejected_pengembalian'))
             Swal.fire({
-                title: "Gagal",
+                title: "Berhasil",
                 text: "Pengembalian ditolak!",
                 icon: "error"
             });

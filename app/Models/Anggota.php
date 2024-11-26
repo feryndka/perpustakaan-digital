@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
 class Anggota extends Authenticatable
 {
     protected $table = 'anggota';
@@ -25,4 +26,9 @@ class Anggota extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function dataPeminjaman()
+    {
+        return $this->hasMany(Data_Peminjaman::class, 'idAnggota');
+    }
 }

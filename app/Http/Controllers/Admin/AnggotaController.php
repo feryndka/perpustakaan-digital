@@ -16,6 +16,18 @@ class AnggotaController extends Controller
                 $query->whereAny(['nama', 'alamat', 'noHP', 'username'], "LIKE", "%" . $request->input('search') . '%');
             });
         }
+
+        // Calculate late fees for each member
+        foreach ($anggota as $user) {
+            // Default late fee to 0
+            $user->lateFees = 0; // Default value
+
+            // Calculate the total late fees for this user
+            $user->lateFees += $user->dataPeminjaman->sum(function ($peminjaman) {
+                return $peminjaman->calculateLateFee();
+            });
+        }
+
         $anggota = $anggota->paginate(5);
         return view('admin.pages.anggota.index', compact('anggota', 'request'));
     }

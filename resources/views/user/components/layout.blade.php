@@ -124,7 +124,7 @@
 
         function perpanjang_buku(button) {
             Swal.fire({
-                title: "Perpanjang Peminjaman Buku",
+                title: "Perpanjang Peminjaman Buku +3 Hari",
                 text: "Apakah anda ingin memperpanjang peminjaman buku ini?",
                 icon: "question",
                 showCancelButton: true,

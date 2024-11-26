@@ -48,7 +48,9 @@
                                     <td>{{ $user->noHP }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->alamat }}</td>
-                                    <td>-</td>
+                                    <td>
+                                        Rp {{ number_format($user->lateFees, 0, ',', '.') }}
+                                    </td>
                                     <td>
                                         <p class="badge p-2 cursor-default bg-green">
                                             Aktif
