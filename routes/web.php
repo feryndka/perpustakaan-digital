@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('/admin/kembali', [AdminKembaliController::class, 'index'])->name('admin.kembali.index');
     Route::post('/admin/kembali/{id}/approve', [AdminKembaliController::class, 'approve'])->name('admin.kembali.approve');
-    Route::delete('/admin/kembali/{id}', [AdminKembaliController::class, 'destroy'])->name('admin.kembali.destroy');
+    Route::post('/admin/kembali/{id}', [AdminKembaliController::class, 'reject'])->name('admin.kembali.reject');
 });
 
 // Middleware untuk melindungi user

@@ -73,12 +73,16 @@ class KembaliController extends Controller
         return redirect()->route('admin.kembali.index')->with('approved_pengembalian', true);
     }
 
-    // Function to delete a Data_Peminjaman instance
-    public function destroy($id)
+    // Function to reject pengembalian -- revert status to Dipinjam
+    public function reject($id)
     {
         // Find and delete the instance of Data_Peminjaman
-        $data = Data_Peminjaman::findOrFail($id); // Finds the record or throws an exception
-        $data->delete();
+        $peminjaman = Data_Peminjaman::findOrFail($id); // Finds the record or throws an exception
+        $peminjaman->status = 'Dipinjam'; // Change status
+        $peminjaman->modifiedOn = Carbon::now(); // Set modifiedOn to now
+
+        // Save changes to the Data_Peminjaman record
+        $peminjaman->save();
 
         // Redirect back with a success message
         return redirect()->route('admin.kembali.index')->with('rejected_pengembalian', true);

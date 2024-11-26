@@ -146,7 +146,7 @@
 
         @if (session('rejected'))
             Swal.fire({
-                title: "Gagal",
+                title: "Berhasil",
                 text: "Peminjaman ditolak!",
                 icon: "error"
             });
