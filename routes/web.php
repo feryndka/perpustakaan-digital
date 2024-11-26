@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:user'], function () {
 
     Route::get('/user/pinjam', [UserPinjamController::class, 'index'])->name('user.pinjam.index');
     Route::post('/user/pinjam/{id}/return', [UserPinjamController::class, 'return'])->name('user.return.book'); // route pengembalian buku
+    Route::post('/user/pinjam/{id}/extend', [UserPinjamController::class, 'extend'])->name('user.extend.book'); // route perpanjang peminjaman buku
 });
 
 // Logout anggota

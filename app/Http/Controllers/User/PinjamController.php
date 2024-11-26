@@ -69,4 +69,27 @@ class PinjamController extends Controller
         // Redirect back with a success message
         return redirect()->route('user.pinjam.index')->with('pengembalian_buku', true);
     }
+
+    public function extend($id)
+    {
+        // Find the Data_Peminjaman record by ID
+        $peminjaman = Data_Peminjaman::findOrFail($id); // Throws an exception if not found
+
+        // Periksa apakah batas_pengembalian ada dan tambahkan 3 hari
+        if ($peminjaman->batas_pengembalian) {
+            $peminjaman->batas_pengembalian = Carbon::parse($peminjaman->batas_pengembalian)->addDays(3);
+        } else {
+            return redirect()->back()->with('error', 'Tanggal batas pengembalian tidak valid.');
+        }
+
+        // Update the record
+        $peminjaman->status = 'Diperpanjang'; // Change status
+        $peminjaman->modifiedOn = Carbon::now(); // Set modifiedOn to now
+
+        // Save changes to the Data_Peminjaman record
+        $peminjaman->save();
+
+        // Redirect back with a success message
+        return redirect()->route('user.pinjam.index')->with('perpanjang_buku', true);
+    }
 }

@@ -1,9 +1,9 @@
 @extends('admin.components.layout')
 
 @section('header')
-    <h1 class="text-center text-bold">PENGEMBALIAN BUKU</h1>
+    <h1 class="text-center text-bold">PENGEMBALIAN & PERPANJANG BUKU</h1>
     <div class="flex justify-center pt-2">
-        <div class="h-1 bg-black rounded w-20"></div>
+        <div class="h-1 bg-black rounded w-40"></div>
     </div>
 @endsection
 

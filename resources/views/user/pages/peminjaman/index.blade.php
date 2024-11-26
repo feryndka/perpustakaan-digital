@@ -65,10 +65,19 @@
                                                     onclick="pengembalian_buku(this)">Pengembalian</button>
                                             </form>
                                             {{-- Delete Button (Perpanjang) --}}
-                                            <form action="{{ route('admin.pinjam.destroy', $item['id']) }}" method="POST">
+                                            <form action="{{ route('user.extend.book', $item['id']) }}" method="POST">
                                                 @csrf
                                                 <button type="button" class="btn btn-sm btn-danger"
-                                                    onclick="">Perpanjang</button>
+                                                    onclick="perpanjang_buku(this)">Perpanjang</button>
+                                            </form>
+                                        </td>
+                                    @elseif ($item['status'] === 'Diperpanjang')
+                                        <td class="d-flex justify-content-center">
+                                            <form action="{{ route('user.return.book', $item['id']) }}" method="POST"
+                                                class="mr-2">
+                                                @csrf
+                                                <button type="button" class="btn btn-sm btn-success"
+                                                    onclick="pengembalian_buku(this)">Pengembalian</button>
                                             </form>
                                         </td>
                                     @else

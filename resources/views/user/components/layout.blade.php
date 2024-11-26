@@ -121,6 +121,29 @@
                 icon: "success"
             });
         @endif
+
+        function perpanjang_buku(button) {
+            Swal.fire({
+                title: "Perpanjang Peminjaman Buku",
+                text: "Apakah anda ingin memperpanjang peminjaman buku ini?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    button.parentElement.submit();
+                };
+            });
+        }
+
+        @if (session('perpanjang_buku'))
+            Swal.fire({
+                title: "Berhasil",
+                text: "Batas pengembalian berhasil diperpanjang!",
+                icon: "success"
+            });
+        @endif
     </script>
 </body>
 
