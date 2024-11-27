@@ -64,8 +64,7 @@
                                                     onclick="approve_pengembalian(this)">Terima</button>
                                             </form>
                                             {{-- Delete Button --}}
-                                            <form action="{{ route('admin.kembali.reject', $item['id']) }}"
-                                                method="POST">
+                                            <form action="{{ route('admin.kembali.reject', $item['id']) }}" method="POST">
                                                 @csrf
                                                 <button type="button" class="btn btn-sm btn-danger"
                                                     onclick="reject_pengembalian(this)">Tolak</button>
