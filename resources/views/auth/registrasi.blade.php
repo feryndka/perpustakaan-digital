@@ -50,6 +50,7 @@
                     @error('nama')
                         <span class="invalid-feedback">*{{ $message }}</span>
                     @enderror
+                    <small class="text-muted">Nama wajib diisi dan hanya boleh mengandung huruf dan spasi (maks. 32 karakter).</small>
                 </div>
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
@@ -58,6 +59,7 @@
                     @error('alamat')
                         <span class="invalid-feedback">*{{ $message }}</span>
                     @enderror
+                    <small class="text-muted">Alamat wajib diisi (minimal 5 karakter).</small>
                 </div>
                 <div class="mb-3">
                     <label for="noHP" class="form-label">Nomor Telepon</label>
@@ -66,6 +68,7 @@
                     @error('noHP')
                         <span class="invalid-feedback">*{{ $message }}</span>
                     @enderror
+                    <small class="text-muted">Nomor Telepon wajib diisi diawali dengan 0, tanpa kode negara.</small>
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
@@ -74,6 +77,7 @@
                     @error('username')
                         <span class="invalid-feedback">*{{ $message }}</span>
                     @enderror
+                    <small class="text-muted">Username wajib diisi, harus unik (minimal 6, maksimal 32 karakter, tidak boleh mengandung spasi).</small>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -82,6 +86,7 @@
                     @error('password')
                         <span class="invalid-feedback">*{{ $message }}</span>
                     @enderror
+                    <small class="text-muted">Password wajib diisi (minimal 8 karakter, mengandung kombinasi huruf besar, huruf kecil, angka, dan karakter khusus seperti @$!%*?&).</small>
                 </div>
                 <button type="submit" class="btn btn-dark w-100">Registrasi</button>
             </form>
