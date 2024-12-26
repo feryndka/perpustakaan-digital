@@ -4,10 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // Import the HasFactory trait
+use Illuminate\Database\Eloquent\Model;
 
 
 class Anggota extends Authenticatable
 {
+    use HasFactory;
+
     protected $table = 'anggota';
     protected $fillable = [
         'nama',
